@@ -4,6 +4,7 @@ import "./globals.css";
 import InteractiveCursor from "@/components/InteractiveCursor";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileLayout from "@/components/MobileLayout";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -37,14 +38,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${spaceGrotesk.variable} ${inter.variable} cursor-auto antialiased md:cursor-none`}
       >
         <InteractiveCursor />
         <Navbar />
-        {children}
-        <Footer />
+        <MobileLayout>
+          {children}
+          <Footer />
+        </MobileLayout>
       </body>
     </html>
   );
