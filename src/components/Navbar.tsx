@@ -11,6 +11,7 @@ const links = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Work", href: "/work" },
+  { label: "Packages", href: "/packages" },
 ];
 
 export default function Navbar() {
@@ -18,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b-4 border-black bg-white">
+    <header className="sticky top-0 z-50 hidden border-b-4 border-black bg-white md:block">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12">
         <motion.div
           whileHover={{ scale: 1.05, rotate: -2 }}
