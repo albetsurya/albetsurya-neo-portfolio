@@ -4,7 +4,12 @@ import Image from "next/image";
 import { ArrowUpRight, Folder } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
-import { Squiggle } from "@/components/Illustrations";
+import {
+  SpikyDiamondBlobSvg,
+  PuddleBlobSvg,
+  StarfishBlobSvg,
+} from "@/components/BlobMascots";
+import StackSection from "@/components/StackSection";
 
 const MOCKUPS = [
   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
@@ -26,10 +31,13 @@ export default function WorkPage() {
   const { products } = PORTFOLIO_DATA;
 
   return (
-    <main className="mx-auto max-w-7xl bg-bone px-6 py-16 md:px-12">
-      <h1 className="cursor-highlight mb-12 inline-block text-6xl leading-none font-bold tracking-tighter md:text-9xl">
-        ALL WORK
-      </h1>
+    <main className="mx-auto max-w-7xl bg-bone px-4 py-8 md:px-12 md:py-16">
+      <div className="relative mb-8 flex items-center gap-3 md:mb-12">
+        <h1 className="cursor-highlight inline-block text-5xl leading-none font-bold tracking-tighter md:text-9xl">
+          ALL WORK
+        </h1>
+        <SpikyDiamondBlobSvg size={60} className="md:h-20 md:w-20" />
+      </div>
 
       <motion.div
         initial="hidden"
@@ -42,7 +50,7 @@ export default function WorkPage() {
             },
           },
         }}
-        className="grid grid-cols-1 gap-12 md:grid-cols-2"
+        className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12"
       >
         {products.map((product, index) => (
           <motion.div
@@ -51,30 +59,47 @@ export default function WorkPage() {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0 },
             }}
-            whileHover={{ y: -8, rotate: index % 2 === 0 ? -2 : 2 }}
-            className="group relative mt-4 flex flex-col"
+            className="group relative mt-3 flex flex-col md:mt-4"
           >
             <a
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-full flex-col"
+              className="flex h-full flex-col transition-transform duration-200 group-hover:-translate-y-2"
             >
               <div
-                className="relative z-10 -mb-1 h-11 w-56 bg-black transition-transform duration-200 group-hover:translate-x-1 group-hover:translate-y-1"
+                className="relative z-20 -mb-[4px] flex w-fit min-w-[140px] items-end md:min-w-[180px]"
                 style={{ clipPath: TAB_CLIP }}
               >
                 <div
-                  className={`absolute inset-x-1 top-1 bottom-0 flex items-center gap-2 px-4 text-xs font-bold uppercase tracking-wider ${BADGES[index % BADGES.length]}`}
+                  className="absolute inset-0 bg-black"
                   style={{ clipPath: TAB_CLIP }}
+                />
+
+                <div
+                  className={`relative flex items-center gap-2 px-4 pb-1 pt-2 md:px-5 md:pb-1.5 md:pt-3 ${BADGES[index % BADGES.length]}`}
+                  style={{
+                    clipPath: TAB_CLIP,
+                    margin: "3px 3px 0 3px",
+                  }}
                 >
-                  <Folder weight="fill" className="text-base" />
-                  <span className="truncate">{product.note}</span>
+                  <Folder
+                    weight="fill"
+                    className="shrink-0 text-sm md:text-base"
+                  />
+                  <span className="whitespace-nowrap text-[10px] font-bold uppercase tracking-wider md:text-xs">
+                    {product.note}
+                  </span>
                 </div>
+
+                <PuddleBlobSvg
+                  size={24}
+                  className="absolute -top-3 -right-3 z-30"
+                />
               </div>
 
-              <div className="flex flex-1 flex-col border-4 border-black bg-white shadow-[8px_8px_0px_0px_#000] transition-all duration-200 group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none">
-                <div className="relative aspect-video w-full overflow-hidden border-b-4 border-black bg-gray-100">
+              <div className="relative z-0 flex flex-1 flex-col border-[3px] border-black bg-white shadow-[6px_6px_0px_0px_#000] transition-all duration-200 group-hover:shadow-[8px_8px_0px_0px_#000] md:border-4 md:shadow-[8px_8px_0px_0px_#000]">
+                <div className="relative aspect-video w-full overflow-hidden border-b-[3px] border-black bg-gray-100 md:border-b-4">
                   <Image
                     src={MOCKUPS[index % MOCKUPS.length]}
                     alt={product.name}
@@ -84,26 +109,26 @@ export default function WorkPage() {
                   />
                 </div>
 
-                <div className="flex flex-1 flex-col gap-3 p-6">
+                <div className="flex flex-1 flex-col gap-2 p-4 md:gap-3 md:p-6">
                   <div className="flex items-start justify-between gap-3">
-                    <h2 className="text-3xl font-bold tracking-tight">
+                    <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
                       {product.name}
                     </h2>
                     <ArrowUpRight
                       weight="bold"
-                      className="mt-1 shrink-0 text-2xl"
+                      className="mt-1 shrink-0 text-xl md:text-2xl"
                     />
                   </div>
 
-                  <p className="text-sm leading-relaxed text-gray-700">
+                  <p className="line-clamp-3 text-xs leading-relaxed text-gray-700 md:text-sm">
                     {product.description}
                   </p>
 
-                  <div className="mt-auto flex flex-wrap gap-2 pt-4">
+                  <div className="mt-auto flex flex-wrap gap-1.5 pt-3 md:gap-2 md:pt-4">
                     {product.stack?.map((item) => (
                       <span
                         key={item}
-                        className="border-2 border-black bg-gray-100 px-2 py-1 text-xs font-bold"
+                        className="border-2 border-black bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold md:px-2 md:py-1 md:text-xs"
                       >
                         {item}
                       </span>
@@ -116,9 +141,10 @@ export default function WorkPage() {
         ))}
       </motion.div>
 
-      <div className="mt-16 flex justify-center">
-        <Squiggle className="h-8 w-48 text-[#FF5500]" />
+      <div className="mt-10 flex justify-center md:mt-16">
+        <StarfishBlobSvg size={60} />
       </div>
+      <StackSection />
     </main>
   );
 }
